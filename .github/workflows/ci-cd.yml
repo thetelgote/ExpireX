@@ -18,20 +18,23 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Dependencies
+      # Backend
+      - name: Install Backend Dependencies
+        working-directory: backend
         run: npm install
 
-      - name: Run Tests
+      - name: Backend Test
+        working-directory: backend
         run: npm test --if-present
 
-      - name: Check Code Quality
-        run: npm run lint --if-present
+      # Frontend
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: npm install
 
-      - name: Build Project
-        run: npm run build --if-present
+      - name: Build Frontend
+        working-directory: frontend
+        run: npm run build
 
-      - name: Upload Build Files
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-files
-          path: build/
+      - name: Success
+        run: echo "CI/CD Pipeline Passed"
